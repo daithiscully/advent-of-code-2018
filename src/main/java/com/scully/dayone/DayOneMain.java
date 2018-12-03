@@ -1,6 +1,7 @@
 package com.scully.dayone;
 
 import com.google.common.collect.Lists;
+import com.scully.Helper;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -19,9 +20,7 @@ public class DayOneMain {
     DayOneMain dayOneMain = new DayOneMain();
 
     // Puzzle Input
-    URL resource = DayOneMain.class.getResource("/day-one/input.txt");
-    Path path = Paths.get(resource.toURI());
-    List<String> freqs = Files.readAllLines(path);
+    List<String> freqs = Helper.getPuzzleInput("day-one");
 
     // Data
     List<Integer> seenFrequencies = Lists.newArrayList();

@@ -1,7 +1,7 @@
 package com.scully.daytwo;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.scully.Helper;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -14,8 +14,8 @@ public class PartTwo {
   public static void main(String[] args) throws URISyntaxException, IOException {
     log.info("Advent code Day two: Part two");
     // Puzzle Input
-//    List<String> boxIDs = Helper.getPuzzleInput();
-    List<String> boxIDs = Helper.getSampleInput();
+    List<String> boxIDs = Helper.getPuzzleInput("day-two");
+//    List<String> boxIDs = Helper.getSampleInput("day-two");
 
     log.info("Box IDs: {}", boxIDs.toString());
 

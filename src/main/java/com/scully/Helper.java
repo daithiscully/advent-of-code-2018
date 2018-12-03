@@ -1,6 +1,5 @@
-package com.scully.daytwo;
+package com.scully;
 
-import com.scully.dayone.DayOneMain;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -12,14 +11,14 @@ import java.util.List;
 public class Helper {
 
 
-  public static List<String> getPuzzleInput() throws URISyntaxException, IOException {
-    URL resource = Helper.class.getResource("/day-two/input.txt");
+  public static List<String> getPuzzleInput(String day) throws URISyntaxException, IOException {
+    URL resource = Helper.class.getResource("/"+day+"/input.txt");
     Path path = Paths.get(resource.toURI());
     return Files.readAllLines(path);
   }
 
-  public static List<String> getSampleInput() throws URISyntaxException, IOException {
-    URL resource = Helper.class.getResource("/day-two/sample.txt");
+  public static List<String> getSampleInput(String day) throws URISyntaxException, IOException {
+    URL resource = Helper.class.getResource("/"+day+"/sample.txt");
     Path path = Paths.get(resource.toURI());
     return Files.readAllLines(path);
   }
