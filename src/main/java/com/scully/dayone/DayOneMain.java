@@ -18,7 +18,7 @@ public class DayOneMain {
 
     DayOneMain dayOneMain = new DayOneMain();
 
-    // File IO
+    // Puzzle Input
     URL resource = DayOneMain.class.getResource("/day-one/input.txt");
     Path path = Paths.get(resource.toURI());
     List<String> freqs = Files.readAllLines(path);
