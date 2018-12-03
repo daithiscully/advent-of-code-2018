@@ -1,5 +1,6 @@
 package com.scully.dayone;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -16,28 +17,42 @@ public class DayOneMain {
     log.info("Day one Advent code");
 
     DayOneMain dayOneMain = new DayOneMain();
+
+    // File IO
     URL resource = DayOneMain.class.getResource("/day-one/input.txt");
     Path path = Paths.get(resource.toURI());
     List<String> freqs = Files.readAllLines(path);
-    boolean firstFreq = false;
+
+    // Data
+    List<Integer> seenFrequencies = Lists.newArrayList();
+    boolean firstFreq = true;
     int previousFreq = 0;
     Integer newFreq = 0;
-    for (String freq : freqs) {
-      if (!firstFreq) {
-        newFreq = dayOneMain.calculateNewFrequency(Integer.parseInt(freq), previousFreq);
-        previousFreq = Integer.parseInt(freq);
-        firstFreq = true;
-      } else {
-        newFreq = dayOneMain.calculateNewFrequency(Integer.parseInt(freq), previousFreq);
-        previousFreq = Integer.parseInt(freq) + previousFreq;
+    boolean foundDuplicate = false;
+
+    while (!foundDuplicate) {
+      for (String freq : freqs) {
+        if (firstFreq) {
+          newFreq = dayOneMain.calculateNewFrequency(Integer.parseInt(freq), previousFreq);
+          seenFrequencies.add(newFreq);
+          previousFreq = Integer.parseInt(freq);
+          firstFreq = false;
+        } else {
+          newFreq = dayOneMain.calculateNewFrequency(Integer.parseInt(freq), previousFreq);
+          if (seenFrequencies.contains(newFreq)) {
+            log.info("Reached duplicate frequency '{}' first", newFreq);
+            foundDuplicate = true;
+            break;
+          }
+          seenFrequencies.add(newFreq);
+          previousFreq = Integer.parseInt(freq) + previousFreq;
+        }
       }
+      log.info("Done: Result = {}", newFreq);
     }
-    log.info("Done: Result = {}", newFreq);
   }
 
   private Integer calculateNewFrequency(Integer nextFreq, Integer previousFreq) {
-    log.info("Calculating {} + {}", nextFreq, previousFreq);
     return (previousFreq) + (nextFreq);
   }
-
 }
