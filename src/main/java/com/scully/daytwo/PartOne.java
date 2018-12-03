@@ -15,14 +15,12 @@ import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DayTwoMain {
+public class PartOne {
 
   public static void main(String[] args) throws URISyntaxException, IOException {
-    log.info("Day two Advent code");
+    log.info("Advent code Day two: Part one");
     // Puzzle Input
-    URL resource = DayOneMain.class.getResource("/day-two/input.txt");
-    Path path = Paths.get(resource.toURI());
-    List<String> boxIDs = Files.readAllLines(path);
+    List<String> boxIDs = Helper.getPuzzleInput();
 
     // Box ID contains 2x same character
     int numberOfDoubles = 0;
@@ -47,11 +45,13 @@ public class DayTwoMain {
     }
   }
 
+
   private static Map<String, Integer> countDuplicates(String boxID){
     Map<String, Integer> result = Maps.newHashMap();
     result.put("DOUBLE", 0);
     result.put("TRIPLE", 0);
 
+    // HAve a map to store the number of times we see each character in the character array
     HashMap<Character, Integer> duplicateMap = Maps.newHashMap();
     char[] chars = boxID.toCharArray();
     for (char aChar : chars) {
@@ -73,47 +73,4 @@ public class DayTwoMain {
     }
     return result;
   }
-//
-//  private static Integer countCharacterDoubleAppearanceInString(String boxID) {
-//    Integer result = 0;
-//    HashMap<Character, Integer> duplicateMap = Maps.newHashMap();
-//    char[] chars = boxID.toCharArray();
-//    for (char aChar : chars) {
-//      if (duplicateMap.containsKey(aChar)) {
-//        duplicateMap.put(aChar, duplicateMap.get(aChar) + 1);
-//      } else {
-//        duplicateMap.put(aChar, 1);
-//      }
-//    }
-//    Set<Character> keys = duplicateMap.keySet();
-//    for (Character key : keys) {
-//      if (duplicateMap.get(key) == 2) {
-//        result++;
-//      }
-//    }
-//    log.info("countCharacterDoubleAppearanceInString map: {}", duplicateMap);
-//    return result;
-//  }
-//
-//  private static Integer countCharacterTripleAppearanceInString(String boxID) {
-//    Integer result = 0;
-//    HashMap<Character, Integer> duplicateMap = Maps.newHashMap();
-//    char[] chars = boxID.toCharArray();
-//    for (char aChar : chars) {
-//      if (duplicateMap.containsKey(aChar)) {
-//        duplicateMap.put(aChar, duplicateMap.get(aChar) + 1);
-//      } else {
-//        duplicateMap.put(aChar, 1);
-//      }
-//    }
-//    Set<Character> keys = duplicateMap.keySet();
-//    for (Character key : keys) {
-//      if (duplicateMap.get(key) == 3) {
-//        result++;
-//      }
-//    }
-//    log.info("countCharacterTripleAppearanceInString map: {}", duplicateMap);
-//    return result;
-//  }
-
 }
