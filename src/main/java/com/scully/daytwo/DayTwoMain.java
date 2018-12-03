@@ -21,7 +21,6 @@ public class DayTwoMain {
     log.info("Day two Advent code");
     // Puzzle Input
     URL resource = DayOneMain.class.getResource("/day-two/input.txt");
-//    URL resource = DayOneMain.class.getResource("/day-two/stripped.txt");
     Path path = Paths.get(resource.toURI());
     List<String> boxIDs = Files.readAllLines(path);
 
@@ -33,11 +32,16 @@ public class DayTwoMain {
 
     for (String boxID : boxIDs) {
       log.info("---- Looking at box ID: {} ----", boxID);
-//      numberOfDoubles += countCharacterDoubleAppearanceInString(boxID);
-//      numberOfTriples += countCharacterTripleAppearanceInString(boxID);
-      numberOfDoubles += countDuplicates(boxID).get("DOUBLE");
-      numberOfTriples += countDuplicates(boxID).get("TRIPLE");
+      if (countDuplicates(boxID).get("DOUBLE") >= 1){
+        numberOfDoubles++;
+      }
+      if (countDuplicates(boxID).get("TRIPLE") >= 1){
+        numberOfTriples++;
+      }
+      log.info("Doubles: {}", numberOfDoubles);
+      log.info("Triples: {}", numberOfTriples);
     }
+
     if (numberOfDoubles != 0 && numberOfTriples != 0) {
       log.info("Checksum: {}", numberOfDoubles * numberOfTriples);
     }
