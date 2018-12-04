@@ -15,13 +15,6 @@ public class PartOne {
     log.info("Advent code Day three: Part one");
         List<String> claimsRaw = Helper.getPuzzleInput("day-three");
 //    List<String> claimsRaw = Helper.getSampleInput("day-three");
-    // cID   L T  w h
-    //#123 @ 3,2: 5x4
-    //#1 @ 1,3: 4x4
-    //#2 @ 3,1: 4x4
-    //#3 @ 5,5: 2x2
-
-    // increment the matrix location based on each claims co-ordinates
     int[][] fabricMatrix = new int[1000][1000];
     List<Claim> claims = getClaims(claimsRaw);
     log.info("Claims: {}", claims);
@@ -30,16 +23,25 @@ public class PartOne {
       int fromLeft = claim.getFromLeft();
       int width = claim.getWidth();
       int height = claim.getHeight();
-
-      for (int i = fromTop; i < height; i++) {
-        for (int j = fromLeft; j < width; j++) {
-          log.info("i: {} j: {}", i, j);
-          fabricMatrix[i][j] = fabricMatrix[i][j] + 1;
+      // go down
+      for (int x = 0; x < height; x++) {
+        int currentXPosition = x + fromTop;
+        // go right
+        for (int y = 0; y < width; y++) {
+          int currentYPosition = y + fromLeft;
+          fabricMatrix[currentXPosition][currentYPosition] = (fabricMatrix[currentXPosition][currentYPosition] + 1);
         }
       }
     });
-    log.info("Fabric Matrix: {}", Arrays.deepToString(fabricMatrix));
 
+    long totalOfMultipleValues = 0;
+    for (int i = 0; i < fabricMatrix.length; i++) {
+      int[] currentRow = fabricMatrix[i];
+      long numberOfMultipleValues = Arrays.stream(currentRow).filter(value -> value > 1)
+          .count();
+      totalOfMultipleValues = totalOfMultipleValues + numberOfMultipleValues;
+    }
+    log.info("Result: {}", totalOfMultipleValues);
   }
 
   private static List<Claim> getClaims(List<String> claimsRaw) {
