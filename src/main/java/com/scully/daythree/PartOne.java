@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.scully.Helper;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,8 +13,8 @@ public class PartOne {
 
   public static void main(String[] args) throws IOException, URISyntaxException {
     log.info("Advent code Day three: Part one");
-    //    List<String> claimsRaw = Helper.getPuzzleInput("day-three");
-    List<String> claimsRaw = Helper.getSampleInput("day-three");
+        List<String> claimsRaw = Helper.getPuzzleInput("day-three");
+//    List<String> claimsRaw = Helper.getSampleInput("day-three");
     // cID   L T  w h
     //#123 @ 3,2: 5x4
     //#1 @ 1,3: 4x4
@@ -21,13 +22,23 @@ public class PartOne {
     //#3 @ 5,5: 2x2
 
     // increment the matrix location based on each claims co-ordinates
-    int[][] fabricMatrix = new int[5][5];
+    int[][] fabricMatrix = new int[1000][1000];
     List<Claim> claims = getClaims(claimsRaw);
     log.info("Claims: {}", claims);
     claims.forEach(claim -> {
-//      fabricMatrix[0][0] = 1;
-//      log.info("Fabric Matrix: {}", fabricMatrix[0][0]);
+      int fromTop = claim.getFromTop();
+      int fromLeft = claim.getFromLeft();
+      int width = claim.getWidth();
+      int height = claim.getHeight();
+
+      for (int i = fromTop; i < height; i++) {
+        for (int j = fromLeft; j < width; j++) {
+          log.info("i: {} j: {}", i, j);
+          fabricMatrix[i][j] = fabricMatrix[i][j] + 1;
+        }
+      }
     });
+    log.info("Fabric Matrix: {}", Arrays.deepToString(fabricMatrix));
 
   }
 
