@@ -13,4 +13,6 @@ class Claim {
   private int width;
   private int height;
 
+
+  private boolean overlapsWithOtherClaim;
 }

@@ -6,19 +6,22 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("Duplicates")
 @Slf4j
-public class PartOne {
+public class PartTwo {
 
   public static void main(String[] args) throws IOException, URISyntaxException {
-    log.info("Advent code Day three: Part one");
+    log.info("Advent code Day three: Part two");
         List<String> claimsRaw = Helper.getPuzzleInput("day-three");
 //    List<String> claimsRaw = Helper.getSampleInput("day-three");
     int[][] fabricMatrix = new int[1000][1000];
     List<Claim> claims = getClaims(claimsRaw);
+    List<Claim> claimsResult = Lists.newArrayList();
     log.info("Claims: {}", claims);
+
     claims.forEach(claim -> {
       int fromTop = claim.getFromTop();
       int fromLeft = claim.getFromLeft();
@@ -30,19 +33,33 @@ public class PartOne {
         // go right
         for (int y = 0; y < width; y++) {
           int currentYPosition = y + fromLeft;
-          fabricMatrix[currentXPosition][currentYPosition] = (fabricMatrix[currentXPosition][currentYPosition] + 1);
+          int newValue = fabricMatrix[currentXPosition][currentYPosition] + 1;
+          fabricMatrix[currentXPosition][currentYPosition] = newValue;
         }
       }
     });
 
-    long totalOfMultipleValues = 0;
-    for (int i = 0; i < fabricMatrix.length; i++) {
-      int[] currentRow = fabricMatrix[i];
-      long numberOfMultipleValues = Arrays.stream(currentRow).filter(value -> value > 1)
-          .count();
-      totalOfMultipleValues = totalOfMultipleValues + numberOfMultipleValues;
-    }
-    log.info("Result: {}", totalOfMultipleValues);
+    claims.forEach(claim -> {
+      int fromTop = claim.getFromTop();
+      int fromLeft = claim.getFromLeft();
+      int width = claim.getWidth();
+      int height = claim.getHeight();
+      for (int x = 0; x < height; x++) {
+        int currentXPosition = x + fromTop;
+        // go right
+        for (int y = 0; y < width; y++) {
+          int currentYPosition = y + fromLeft;
+          if (fabricMatrix[currentXPosition][currentYPosition] >= 2){
+            claim.setOverlapsWithOtherClaim(true);
+          }
+        }
+      }
+      if (!claim.isOverlapsWithOtherClaim()){
+        claimsResult.add(claim);
+      }
+    });
+  log.info("Part 2 Result: {}", claimsResult);
+
   }
 
   private static List<Claim> getClaims(List<String> claimsRaw) {
