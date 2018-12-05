@@ -8,7 +8,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class LogEntry implements Comparable<LogEntry>{
 
+  private String rawData;
   private Date date;
+  private Guard guard;
 
   public int compareTo(LogEntry o) {
     return getDate().compareTo(o.getDate());
