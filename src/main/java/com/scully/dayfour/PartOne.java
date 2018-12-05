@@ -22,15 +22,20 @@ public class PartOne {
     List<String> rawTestData = Helper.getSampleInput("day-four");
 //    List<String> rawTestData = Helper.getPuzzleInput("day-four");
     List<LogEntry> logEntries = getSortedLogEntries(rawTestData);
-    assignGuardIDsToLogEntries(logEntries);
+    assignGuardsToLogEntries(logEntries);
 
-    // TODO Accumulate the number of minutes each guard spends asleep
+    // Accumulate the number of minutes each guard spends asleep
     for (LogEntry logEntry : logEntries) {
       Guard guard = logEntry.getGuard();
-
+      if (guard.getId() == 10){
+        log.info("Guard: {}", guard);
+      }
     }
 
-    logEntries.forEach(logEntry -> log.info(logEntry.toString()));
+
+
+
+//    logEntries.forEach(logEntry -> log.info(logEntry.toString()));
   }
 
   private static List<LogEntry> getSortedLogEntries(List<String> logEntryList) {
@@ -53,7 +58,7 @@ public class PartOne {
     return logEntries.stream().sorted().collect(Collectors.toList());
   }
 
-  private static void assignGuardIDsToLogEntries(List<LogEntry> logEntries) {
+  private static void assignGuardsToLogEntries(List<LogEntry> logEntries) {
     int currentGuardId = 0;
     for (LogEntry logEntry : logEntries) {
       Pattern pattern = Pattern.compile("Guard #(.*\\D)begins", Pattern.DOTALL);
